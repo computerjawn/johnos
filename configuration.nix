@@ -8,20 +8,7 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
 
-  # Bootloader Configuration
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  # Networking
-  networking.hostName = "nixos";
-  networking.networkmanager.enable = true;
-
-  # Firewall Configuration
-  networking.firewall.allowedTCPPorts = [];
-  networking.firewall.allowedUDPPorts = [];
-  networking.firewall.enable = true;
-
+  boot.loader.grub.enable = false;
   # Time and Locale
   time.timeZone = "America/Denver";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -48,6 +35,7 @@
   # Display and Desktop
   services.xserver.enable = true;
   services.xserver.xkb.layout = "us";
+  services.xserver.videoDrivers = [ "amdgpu" ];
   services.desktopManager.plasma6.enable = true;
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
@@ -67,32 +55,12 @@
 
   # System Packages
   environment.systemPackages = with pkgs; [
-    wget
-    vim
     helix
-    bun
     mumble
     prismlauncher
     docker
-    rocmPackages.rocm-smi
     git
-    vlc
-    r2modman
-    obs-studio
-    protonplus
-    chromium
-    shotcut
-    vscode
-    mangohud
-    chromium
-    vesktop
-    (discord.override {
-      # withOpenASAR = true; # can do this here too
-      withVencord = true;
-    })
-    (pkgs.btop.override {
-      rocmSupport = true;
-    })
+    firefox
   ];
 
   # System State Version
