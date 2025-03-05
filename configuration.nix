@@ -1,10 +1,11 @@
 { config, pkgs, ... }:
 
 {
-  # Hardware Configuration
-  imports = [ ./hardware-configuration.nix ./wooting.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ./wooting.nix
+  ];
 
-  # Nix Settings
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
 
@@ -61,6 +62,7 @@
     docker
     git
     firefox
+    btop
   ];
 
   # System State Version
